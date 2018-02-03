@@ -179,7 +179,6 @@ return [
 
         // my Used Service Provider
         Barryvdh\Debugbar\ServiceProvider::class,
-//        Mcamara\LaravelLocalization\LaravelLocalizationServiceProvider::class,
 
     ],
 
@@ -231,7 +230,7 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         // my Used Alias
         'Debugbar' => Barryvdh\Debugbar\Facade::class,
-//        'LaravelLocalization' => Mcamara\LaravelLocalization\Facades\LaravelLocalization::class,
+        'HTMLMin' => HTMLMin\HTMLMin\Facades\HTMLMin::class,
     ],
 
 ];
