@@ -2,6 +2,8 @@
 
 use \Illuminate\Support\Facades\App;
 use \Illuminate\Support\Facades\Redirect;
+use Illuminate\Http\Request;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -13,21 +15,41 @@ use \Illuminate\Support\Facades\Redirect;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+
+
+
+
+Route::group(
+    [
+        'prefix' => LaravelLocalization::setLocale(),
+        'middleware' => [ 'localeSessionRedirect', 'localizationRedirect', 'localeViewPath' ]
+    ],
+function()
+{
+    /** ADD ALL LOCALIZED ROUTES INSIDE THIS GROUP **/
+
+    Route::get('/', function () {
+        return trans('welcome.welcome');
+        return view('welcome');
+    });
+
+    Route::get('/mina', function () {
+        return "new Route";
+        return view('welcome');
+    });
+
+    Route::get('/language/{lang}', function (Request $request) {
+        $locale = $request->lang;
+        $languageArr = array("ar","en");
+        if(in_array($locale , $languageArr)){
+        return Redirect::to("/".$locale."/",301);
+        }else{
+        return Redirect::to("/",301);
+        }
+    });
+
 });
 
-Route::get('/mina', function () {
-    return "new Route";
-    return view('welcome');
-});
 
-Route::get('language/{locale}', function ($locale) {
-    $languageArr = array("ar","en");
-    if(in_array($locale , $languageArr)){
-        App::setLocale($locale);
-    }
-//    return Redirect::to('/',301);
-//    return "language updated;";
-    //
-});
+
+
