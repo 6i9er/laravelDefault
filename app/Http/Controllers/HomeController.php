@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\ThanksSubscribeMail;
 use Illuminate\Http\Request;
+use App\Mail\TestEmail;
+use Illuminate\Support\Facades\Mail;
 
 class HomeController extends Controller
 {
@@ -13,7 +16,7 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+//        $this->middleware('auth');
     }
 
     /**
@@ -23,6 +26,17 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+
+        $data = [
+            'name' => 'mina amir',
+            'email' => 'eng.mina23@gmail.com',
+            'subject' => 'Subscribtion Complete'
+            ];
+
+        $email = new ThanksSubscribeMail($data);
+        $email->setData($data) ;
+        Mail::to($data['email'])->send($email);
+
+        return "email Has Send Success";
     }
 }
