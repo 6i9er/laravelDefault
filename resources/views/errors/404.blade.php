@@ -5,8 +5,8 @@
     <link href="//fonts.googleapis.com/css?family=Poiret+One" rel="stylesheet">
 @stop
 @section('styles')
-    <link rel="stylesheet" href="{{ url('css/404.css') }}">
-    {{--<link rel="stylesheet" href="{{ asset(elixir('css/separate/404.css')) }}">--}}
+{{--    <link rel="stylesheet" href="{{ url('css/404.css') }}">--}}
+    <link rel="stylesheet" href="{{ asset(elixir('css/separate/404.css')) }}">
 @endsection
 @section('content')
     <div class="container demo-2">
@@ -25,7 +25,7 @@
 @endsection
 @section('scripts')
     <!-- js files -->
-        <script src="{{ url('js/404.js') }}" ></script>
-    {{--    <script src="{{ asset(elixir('js/separate/404.js')) }}" ></script>--}}
+        {{--<script src="{{ url('js/404.js') }}" ></script>--}}
+        <script src="{{ asset(elixir('js/separate/404.js')) }}" ></script>
     <!-- /js files -->
 @endsection

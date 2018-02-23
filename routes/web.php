@@ -38,19 +38,12 @@ function()
         return view('welcome');
     });
 
-    Route::get('/language/{lang}', function (Request $request) {
-        $locale = $request->lang;
-        $languageArr = array("ar","en");
-        if(in_array($locale , $languageArr)){
-        return Redirect::to("/".$locale."/",301);
-        }else{
-        return Redirect::to("/",301);
-        }
-    });
-
+    // changing Site Language
+    Route::get('/language/{lang}', 'SiteSettingController@getChangelanguage');
     Auth::routes();
 
-    Route::get('/home', 'HomeController@index')->name('home');
+    Route::resource('home', 'HomeController');
+//    Route::get('/home', 'HomeController@index')->name('home');
 
 
 });
