@@ -11,9 +11,9 @@
                         <table class="table table-bordered">
                             <thead>
                                 <tr>
-                                    <th>#</th>
-                                    <th>name</th>
-                                    <th>email</th>
+                                    <th><a href="javascript:void(0)">#</a></th>
+                                    <th ><a href="javascript:void(0)">name</a></th>
+                                    <th><a href="javascript:void(0)">email</a></th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -42,35 +42,33 @@
     <script type="text/javascript">
 
         $(function() {
+            $('.pagination li a[rel=next] , .pagination li a[rel=prev]').parent('li').remove();
             $('body').on('click', '.pagination a', function(e) {
                 e.preventDefault();
-
                 var currentPageInfo = getCurrentPage();
-
-                // check if the btn is next btn
-                if($(this).attr('rel') == "next" ){
-                    var url = "{{url('users?page=')}}" + currentPageInfo.currentPage;
-                }else{
-                    $(this).parent('li').attr('class' , "active");
-                    var url = $(this).attr('href');
-                }
-
+                $(this).parent('li').attr('class' , "active");
+                var url = $(this).attr('href');
                 getUsers(url);
                 window.history.pushState("", "", url);
             });
 
 
-            // next = 1 , prev = 2
-            function getCurrentPage(getNext =0){
+            function getCurrentPage(removeBtns = 0){
                 var currentPage = "";
                 var currentPageUrl = "";
                 $('.pagination li').each(function () {
-                    if ($(this).attr('class') == "active") {
-                        currentPage = ($(this).children('span').text()) ? $(this).children('span').text() : $(this).children('a').text();
-                        currentPageUrl = "{{url('users?page=')}}" + currentPage;
-                        $(this).html("<a href='" + currentPageUrl + "'>" + currentPage + "</a>")
+                    if(removeBtns == "1"){
+                        if($(this).attr('rel') == "next" ){
+                            $(this).remove()
+                        }
+                    }else{
+                        if ($(this).attr('class') == "active") {
+                            currentPage = ($(this).children('span').text()) ? $(this).children('span').text() : $(this).children('a').text();
+                            currentPageUrl = "{{url('users?page=')}}" + currentPage;
+                            $(this).html("<a href='" + currentPageUrl + "'>" + currentPage + "</a>")
+                        }
+                        $(this).attr('class', "");
                     }
-                    $(this).attr('class', "");
                 });
                 return {
                     "currentPage" : currentPage,
