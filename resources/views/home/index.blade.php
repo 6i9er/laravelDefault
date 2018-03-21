@@ -45,22 +45,43 @@
             $('body').on('click', '.pagination a', function(e) {
                 e.preventDefault();
 
-                $('.pagination li').each(function () {
-                    $(this).attr('class' , "")
-                });
+                var currentPageInfo = getCurrentPage();
 
-                $(this).parent('li').attr('class' , "active");
-                console.log($(this).parent('li').attr('class' , "active"));
-                var url = $(this).attr('href');
+                // check if the btn is next btn
+                if($(this).attr('rel') == "next" ){
+                    var url = "{{url('users?page=')}}" + currentPageInfo.currentPage;
+                }else{
+                    $(this).parent('li').attr('class' , "active");
+                    var url = $(this).attr('href');
+                }
+
                 getUsers(url);
                 window.history.pushState("", "", url);
             });
 
+
+            // next = 1 , prev = 2
+            function getCurrentPage(getNext =0){
+                var currentPage = "";
+                var currentPageUrl = "";
+                $('.pagination li').each(function () {
+                    if ($(this).attr('class') == "active") {
+                        currentPage = ($(this).children('span').text()) ? $(this).children('span').text() : $(this).children('a').text();
+                        currentPageUrl = "{{url('users?page=')}}" + currentPage;
+                        $(this).html("<a href='" + currentPageUrl + "'>" + currentPage + "</a>")
+                    }
+                    $(this).attr('class', "");
+                });
+                return {
+                    "currentPage" : currentPage,
+                    "currentPageUrl" : currentPageUrl
+                }
+            }
+            // get the new page data
             function getUsers(url) {
                 $.ajax({
                     url : url
                 }).done(function (data) {
-                    console.log(data);
                     if(data['error'] == "0"){
                         $('#usersTrs').html(data['data']);
                     }
