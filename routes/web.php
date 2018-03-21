@@ -33,6 +33,8 @@ function()
         return view('welcome');
     });
 
+    Route::get('/users', 'HomeController@listUsers');
+
     Route::get('/mina', function () {
         return "new Route";
         return view('welcome');
