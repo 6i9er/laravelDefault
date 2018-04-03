@@ -180,6 +180,7 @@ return [
         // my Used Service Provider
         Barryvdh\Debugbar\ServiceProvider::class,
         Tymon\JWTAuth\Providers\LaravelServiceProvider::class,
+        'Barryvdh\TranslationManager\ManagerServiceProvider',
     ],
 
     /*
